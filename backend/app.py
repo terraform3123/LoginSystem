@@ -12,6 +12,10 @@ usuarios_cadastrados = [
     {
 	"email": "lucas@gmail.com",
 	"senha": "52122"
+    },
+    {
+    "email": "danilo@gmail.com",
+    "senha": "09421"
     }
 ]
 
