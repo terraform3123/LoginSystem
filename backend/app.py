@@ -24,59 +24,60 @@ usuarios_cadastrados = [
 
 @app.route("/", methods=["GET"])
 def mostrar_cadastrados():
-    return usuarios_cadastrados
+    return usuarios_cadastrados, 200
 
 
 @app.route("/cadastro", methods=["POST"])
 def fazer_cadastro():
     dados = request.json
-    condicao, mensagem = validar_cadastro(dados["email"], dados["senha"])
-    if condicao == True:
+    dados["id"] = len(usuarios_cadastrados) + 1
+    condicao, mensagem, codigo = validar_cadastro(dados["email"], dados["senha"])
+    if (condicao == True):
         usuarios_cadastrados.append(dados)
         return mensagem
     else:
         return mensagem
 
 def validar_cadastro(email, senha):
-    if " " in email:
+    if (" " in email):
         return False, "Email não pode haver espaço vázio."
-    if not "@" in email:
+    if (not "@" in email):
         return False, "Email inválido."
     arroba = email.index("@")
     parte = email[arroba:]
-    if not "." in parte:
+    if (not "." in parte):
         return False, "Email inválido."
-    if email.strip() == "":
+    if (email.strip() == ""):
         return False, "Email inválido."
     for usuario in usuarios_cadastrados:
-        if email == usuario["email"]:
+        if (email == usuario["email"]):
             return False, "Email já cadastrado."
-    if senha.strip() == "":
+    if (senha.strip() == ""):
         return False, "Senha inválida."
-    if " " in senha:
+    if (" " in senha):
         return False, "Senha não pode haver espaço vázio."
-    if len(senha) < 8:
+    if (len(senha) < 8):
         return False, "A senha deve ter ao menos oito caracteres."
-    return True, "Cadastro realizado com sucesso."
+    return True, "Cadastro realizado com sucesso.", 200
     
 
 
 @app.route("/login", methods=["POST"])
 def fazer_login():
     dados = request.json
-    condicao, mensagem = validar_login(dados["email"], dados["senha"])
-    if condicao == True:
-        return mensagem
+    condicao, mensagem, codigo = validar_login(dados["email"], dados["senha"])
+    if (condicao == True):
+        return mensagem, 201
     else:
         return mensagem
 
 
 def validar_login(email, senha):
     for usuario in usuarios_cadastrados:
-        if email == usuario["email"]:
-            if senha == usuario["senha"]:
+        if (email == usuario["email"]):
+            if (senha == usuario["senha"]):
                 return True, "Login realizado."
     return False, "Email/Senha inválido."
 
-if __name__ == "__main__":
+if (__name__ == "__main__"):
     app.run(debug=True)
