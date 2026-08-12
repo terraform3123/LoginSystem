@@ -32,11 +32,13 @@ def fazer_cadastro():
     return "Cadastro realizado com sucesso."
 
 def validar_cadastro(email, senha):
-    if email in usuarios_cadastrados:
-        return "Email já cadastrado."
+    for usuario in usuarios_cadastrados:
+        print(email)
+        print(usuario["email"])
+        if email == usuario["email"]:
+            return "Email cadastrado" 
     if len(senha) <= 5:
         return "Mínimo de cinco caracteres."
-    return True
     
 
 
