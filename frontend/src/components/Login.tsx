@@ -26,16 +26,6 @@ export function Login() {
         setSenha("")
     }
 
-    async function getUsers() {
-        const response = await api.get<User[]>("/")
-
-        setUsers(response.data)
-    }
-
-    useEffect(() => {
-        getUsers()
-    }, [])
-
     return (
         <div>
             <div className="card">
