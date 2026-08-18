@@ -1,36 +1,41 @@
 import { useEffect, useState } from 'react'
-import React from '../assets/react.svg'
+import ReactLogo from '../assets/react.svg'
 import api from '../services/api'
 
 interface User {
     id: number;
     email: string;
-    senha: string;
 }
 
 export function Login() {
-    const [users, setUsers] = useState<User[]>([])
     const [email, setEmail] = useState<string>("")
     const [senha, setSenha] = useState<string>("")
-    const [isLogged, setIsLogged] = useState<boolean>(false)
+    const [mensagem, setMensagem] = useState<string>("")
 
-    async function loginUsers() {
-        const response = await api.post("/login", {
-            email: email,
-            senha: senha,
-        })
+    async function loginUsers(e: React.FormEvent<HTMLFormElement>) {
+        e.preventDefault()
 
-        console.log(response.data)
-        setIsLogged(true)
-        setEmail("")
-        setSenha("")
+        try {
+            const response = await api.post("/login", {
+                email,
+                senha,
+            })
+
+            console.log(response.data)
+
+            setMensagem(response.data)
+        } catch (error: any) {
+            setMensagem(error.response.data)
+        }
+
+
     }
 
     return (
         <div>
             <div className="card">
                 <div className="loginHeader">
-                    <img src={React} alt="React Logo" />
+                    <img src={ReactLogo} alt="React Logo" />
                     <p>WELCOME BACK!</p>
                     <p>Sign in to your account</p>
                 </div>
@@ -43,19 +48,13 @@ export function Login() {
                         <input type="password" value={senha} onChange={(event) => setSenha(event.target.value)} className="form-control" placeholder='12345678' />
                         <button type="submit">Login</button>
                     </form>
+                    <p>{mensagem}</p>
                 </div>
                 <div className="footerLogin">
                 </div>
 
             </div>
             <div className="listUsers">
-                {isLogged ? "Sim" : "Nao"}
-                {users.map((user) => (
-                    <div key={user.id}>
-                        <p>{user.email}</p>
-                        <p>{user.senha}</p>
-                    </div>
-                ))}
             </div>
         </div>
 
