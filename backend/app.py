@@ -8,20 +8,24 @@ CORS(app)
 usuarios_cadastrados = [
     {
     "id": 1,
+    "name": "Fernando",
     "email": "fernando@gmail.com",
     "senha": "12345678"
     },
     {
     "id": 2,
+    "name": "Lucas",
 	"email": "lucas@gmail.com",
 	"senha": "52122652"
     },
     {
     "id": 3,
+    "name": "Danilo",
     "email": "danilo@gmail.com",
     "senha": "09421725"
     }
 ]
+
 
 @app.route("/", methods=["GET"])
 def mostrar_cadastrados():
@@ -31,14 +35,17 @@ def mostrar_cadastrados():
 @app.route("/cadastro", methods=["POST"])
 def fazer_cadastro():
     dados = request.json
-    condicao, mensagem, codigo_status = validar_cadastro(dados["email"], dados["senha"])
+    condicao, mensagem, codigo_status = validar_cadastro(dados["name"], dados["email"], dados["senha"])
     if (condicao == True):
         dados["id"] = len(usuarios_cadastrados) + 1
         usuarios_cadastrados.append(dados)
         return mensagem, codigo_status
     return mensagem, codigo_status
 
-def validar_cadastro(email, senha):
+
+def validar_cadastro(name, email, senha):
+    if (name.strip() == ""):
+        return False, "Nome inválido", 400
     if (" " in email):
         return False, "Email não pode haver espaço vázio.", 400
     if (not "@" in email):
@@ -75,6 +82,7 @@ def validar_login(email, senha):
             if (senha == usuario["senha"]):
                 return True, "Login realizado.", 200
     return False, "Email/Senha inválido.", 400
+
 
 if (__name__ == "__main__"):
     app.run(debug=True)

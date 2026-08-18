@@ -50,8 +50,6 @@ export function Login() {
                     </form>
                     <p>{mensagem}</p>
                 </div>
-                <div className="footerLogin">
-                </div>
 
             </div>
             <div className="listUsers">

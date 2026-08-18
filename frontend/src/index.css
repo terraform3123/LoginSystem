@@ -13,7 +13,6 @@ body {
 }
 
 .container {
-  border: 1px solid red;
   min-width: 100vw;
   min-height: 100vh;
   display: flex;
@@ -41,6 +40,8 @@ body {
       margin-bottom: 10px;
       height: 50px;
     }
+
+
   }
 
   & form {
@@ -52,6 +53,17 @@ body {
     max-width: 300px;
     min-width: 300px;
     padding-bottom: 20px;
+
+
+    & button {
+      width: 100%;
+      border-radius: 10px;
+      padding: 8px;
+      color: #fff;
+      border: 1px solid black;
+      background: linear-gradient(to right, #0aecfc, #06a9b4);
+      margin-top: 20px;
+    }
 
     & label {
       padding-top: 10px;
@@ -67,13 +79,6 @@ body {
     flex-direction: column;
     width: 300px;
 
-    & button {
-      width: 100%;
-      border-radius: 10px;
-      padding: 8px;
-      color: #fff;
-      border: 1px solid black;
-      background: linear-gradient(to right, #0aecfc, #06a9b4);
-    }
+
   }
 }
