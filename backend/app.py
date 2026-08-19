@@ -1,9 +1,14 @@
 from flask import Flask, request
 from flask_cors import CORS
+import sqlite3
 
 
 app = Flask(__name__)
 CORS(app)
+con = sqlite3.connect("banco_usuarios.db")
+cur = con.cursor()
+
+cur.execute("""CREATE TABLE IF NO EXISTS""")
 
 usuarios_cadastrados = [
     {
@@ -11,7 +16,7 @@ usuarios_cadastrados = [
     "name": "Fernando",
     "email": "fernando@gmail.com",
     "senha": "12345678"
-    },
+    }, 
     {
     "id": 2,
     "name": "Lucas",
@@ -67,7 +72,7 @@ def validar_cadastro(name, email, senha):
         return False, "A senha deve ter ao menos oito caracteres.", 400 
     return True, "Cadastro realizado com sucesso.", 200
     
-
+    #XODARA VERÁ ISSO ALGUM DIA
 
 @app.route("/login", methods=["POST"])
 def fazer_login():
